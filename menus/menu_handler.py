@@ -11,7 +11,7 @@ class Menus:
         if menu_items is not None:
             self.initialize_menu(menu_items=menu_items)
         self.options = None
-        self.valid_options = None
+        self.default_function = None
         self.set_default_options()
         self.message = ""
 
@@ -49,6 +49,8 @@ class Menus:
         response = input('Please enter an options: ').lower()
         if response in self.menu_items:
             self.menu_items[response]()
+        elif self.default_function:
+            self.default_function(self)
         else:
             self.message = 'Invalid Menu Selection'
 
@@ -56,11 +58,8 @@ class Menus:
         key, text, function = menu_item
         self.menu_items[key.lower()] = MenuItem(text=text, key=key, function=function, parent=self)
 
-    # def remove_menu_item(self, menu_key):
-    #     pass
-    #
-    # def edit_menu_item(self, menu_key):
-    #     pass
+    def set_default_function(self, function):
+        self.default_function = function
 
     def change_menu_options(self, key, value):
         if key in self.options:
