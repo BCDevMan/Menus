@@ -15,4 +15,7 @@ class MenuItem:
     def __call__(self, *args, **kwargs):
         if self.function is None:
             raise StopIteration('No Function Defined')
-        self.function(self.parent)
+        try:
+            self.function(self.parent)
+        except TypeError:
+            self.function()

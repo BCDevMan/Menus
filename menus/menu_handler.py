@@ -13,6 +13,7 @@ class Menus:
         self.options = None
         self.default_function = None
         self.set_default_options()
+        self.selection = None
         self.message = ""
 
     def display_menu(self):
@@ -42,13 +43,14 @@ class Menus:
     def separator(self):
         print(self.options['separator']*20)
 
-    def print_out(self, message):
+    def display(self, message):
         self.message = message
 
     def get_input(self):
         response = input('Please enter an options: ').lower()
         if response in self.menu_items:
-            self.menu_items[response]()
+            self.selection = self.menu_items[response]
+            self.selection()
         elif self.default_function:
             self.default_function(self)
         else:
@@ -56,6 +58,9 @@ class Menus:
 
     def add_menu_item(self, menu_item):
         key, text, function = menu_item
+        key = str(key)
+        if key in self.menu_items:
+            raise KeyError('Duplicate Menu Key')
         self.menu_items[key.lower()] = MenuItem(text=text, key=key, function=function, parent=self)
 
     def set_default_function(self, function):
@@ -104,7 +109,4 @@ class Menus:
             'key_options': 'brackets',
             'key_options_begin': '[',
             'key_options_end': ']'
-        }
-
-        self.valid_options = {
         }
