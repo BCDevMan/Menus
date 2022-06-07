@@ -21,7 +21,7 @@ class Menus:
             print(self.title)
             self.separator()
             for item in self.menu_items.values():
-                print(f'{item.key} {item.text}')
+                print(f'{self.key_option(item.key)} {item.text}')
             self.separator()
             if self.message:
                 print(self.message)
