@@ -14,14 +14,14 @@ A menu with default options enabled will appear as:
             ********************
             prompt:
 
-usage:
-menu = Menu(title="Menu Title", help_text="Menu Help Text", menu_items=[
-        ['A', 'Menu item 1', callback_function_1],
-        ['B', 'Menu item 2', callback_function 2],
-        ['C', 'Back to previous menu', None],
-        ['X', 'Exit Program, exit_program],
-      ])
-menu.display_menu()
+            usage:
+            menu = Menu(title="Menu Title", help_text="Menu Help Text", menu_items=[
+                    ['A', 'Menu item 1', callback_function_1],
+                    ['B', 'Menu item 2', callback_function 2],
+                    ['C', 'Back to previous menu', None],
+                    ['X', 'Exit Program, exit_program],
+                  ])
+            menu.display_menu()
 
         :param title (optional): The menu title displayed at the top of the menu.
         :param help_text (optional): Help text displayed below the menu.
