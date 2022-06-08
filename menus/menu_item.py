@@ -18,4 +18,5 @@ class MenuItem:
         try:
             self.function(self.parent)
         except TypeError:
+            # This is to allow the user to create a callback function without parameters
             self.function()
