@@ -6,7 +6,7 @@ from typing import Callable, Any
 class MenuItem:
     text: str
     key: str
-    function: Callable[[Any], None]
+    function: Callable[..., None]
     parent: Any
 
     def __str__(self):

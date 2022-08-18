@@ -1,1 +1,1 @@
-from .menu_handler import Menus
+from .menus import Menus
