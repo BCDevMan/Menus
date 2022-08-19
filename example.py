@@ -8,10 +8,29 @@ def main():
         ['2', 'Goodbye', goodbye],
         ['3', 'Sub Menu', sub_menu],
         ['4', 'Auto Menu', auto_menu],
-        ['5', 'Exit Program', exit_program],
+        ['6', 'Auto Return', return_menu],
+        [7, 'Menu with returned value', get_returned]
     ])
+    menu.add_menu_item(['0', 'Exit Program', exit_program])
     menu.display_menu()
 
+
+def get_returned(menu):
+    returning_menu(menu)
+    menu.display(menu.returned_values)
+
+
+def returning_menu(parent):
+    ret_menu = Menus('Return an input', [
+        [1, 'Get Input', get_input],
+        [2, 'Exit', None]
+    ], parent=parent)
+    ret_menu.return_on_valid_input = True
+    ret_menu.display_menu()
+
+def get_input(menu):
+    response = input('Enter something')
+    menu.parent.returned_values = response
 
 def sub_menu():
     menu = Menus('Sub Menu', menu_items=[
@@ -39,8 +58,22 @@ def auto_menu():
     menu.display_menu()
 
 
+def return_menu():
+    menu = Menus('Return after valid input', menu_items=[
+        ['1', 'Test1', return_menu_feedback],
+        ['2', 'Testings', return_menu_feedback],
+        [3, 'Exit', None]
+    ])
+    menu.return_on_valid_input = True
+    menu.display_menu()
+
+
+def return_menu_feedback(menu: Menus):
+    print(menu.selected_menu_item.text)
+
+
 def auto_func(menu):
-    menu.display(menu.selection)
+    menu.display(menu.selected_menu_item.text)
 
 
 def exit_program():
@@ -64,7 +97,7 @@ def goodbye(menu):
 
 
 def defaulter(menu):
-    menu.display(menu.selection_text)
+    menu.display(menu.selected_key)
 
 
 if __name__ == "__main__":
