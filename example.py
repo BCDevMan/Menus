@@ -1,4 +1,3 @@
-import sys
 from menus import Menus
 
 
@@ -11,7 +10,7 @@ def main():
         ['6', 'Auto Return', return_menu],
         [7, 'Menu with returned value', get_returned]
     ])
-    menu.add_menu_item(['0', 'Exit Program', exit_program])
+    menu.add_menu_item(['0', 'Exit', None])
     menu.display_menu()
 
 
@@ -28,16 +27,17 @@ def returning_menu(parent):
     ret_menu.return_on_valid_input = True
     ret_menu.display_menu()
 
-def get_input(menu):
+
+def get_input(menu: Menus):
     response = input('Enter something')
-    menu.parent.returned_values = response
+    menu.return_values(response)
+
 
 def sub_menu():
     menu = Menus('Sub Menu', menu_items=[
         ['A', "Hello", sub_hello],
         ['B', "Good Bye", sub_bye],
-        ['X', 'Back to Main Menu', None],
-        ['XXX', 'Exit Program', exit_program],
+        ['X', 'Back to Main Menu', None]
     ], help_text='Press any option key, or enter \nanything that is not a key to print that.')
     menu.set_separator('-', 50)
     menu.set_key_options('<', '>:')
@@ -46,7 +46,7 @@ def sub_menu():
 
 
 def auto_menu():
-    items = ('aaaa', 'bbbb', 'ccccc')
+    items = ('Bob', 'Alice', 'Charlie')
     menu = Menus('Auto')
     for key, item in enumerate(items, 1):
         menu.add_menu_item([key, item, auto_func])
@@ -76,10 +76,6 @@ def auto_func(menu):
     menu.display(menu.selected_menu_item.text)
 
 
-def exit_program():
-    sys.exit()
-
-
 def sub_hello(menu):
     menu.display('Sub Menu Says Hello!')
 
@@ -93,7 +89,7 @@ def hello(menu):
 
 
 def goodbye(menu):
-    menu.display('Auf Wiedersehen')
+    menu.display('See ya later!')
 
 
 def defaulter(menu):
