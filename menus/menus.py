@@ -6,53 +6,12 @@ from .menu_item import MenuItem
 class Menus:
     def __init__(self, title=None, menu_items=None, help_text=None, return_on_valid_input=False, parent=None):
         """
-        Class for construction of a basic CLI menu
-        A menu with default options enabled will appear as:
-
-            Menu Title
-            ********************
-            [key] menu item
-            [key] menu item
-            [key] menu item
-            ********************
-            Help Text
-            ********************
-            Output / Messages
-            ********************
-            prompt:
-
-        :param title: The menu title displayed at the top of the menu (optional)
-        :param help_text: Help text displayed below the menu (optional)
-        :param menu_items: A list of menu items to be added at instantiation
+            :param title (optional): The menu title displayed at the top of the menu.
+            :param menu_items (optional): A list of menu items to be added at instantiation.
             (Can be added later using self.add_menu_item()
-
-        Adding Menu Items
-            menu_item is a list containing the following: [key, text, callback function]
-                key: The key you wish to press to select that menu item (case insensitive, must be unique per menu)
-                text: the text you want displayed in the menu
-                callback function: the function you wish to have called when that menu item is selected
-                    NOTES:
-                        If the callback is set to None, it will exit this menu when that item is selected, and return
-                        to the previous menu.
-                        Any callback function can take a single parameter which is the menu object.
-                        this allows you to access menu fields and methods from within the callback function.
-                        most commonly menu.display("Text to be displayed")
-                        and menu.selection_text  (This contains a copy of what the user entered at the prompt)
-                        you can also access menu.selection_item, which contains a copy of the menu item that
-                        was selected.
-
-        Options:
-            set_default_function(self, function):
-                This sets a callback function to be called if text is entered that is not a menu key.
-            set_key_options(self, left='[', right=']'):
-                This allows you to change the enclosures displayed around the key.
-                NOTE: If you only want a single enclosure such as 1). must set the opposite enclosure to an empty
-                string.
-                    Example: menu.set_key_options(left="", right=")."
-            set_separator(self, separator='*', count=20):
-                This sets the type and length of the line used to separate parts of the menu.
-            prompt_text:
-                This is the text displayed by the prompt
+            :param help_text (optional): Help text displayed below the menu.
+            :param return_on_valid_input (optional): If set to True, the menu will return to the parent menu whenever a valid input has been used.
+            :param parent (optional): Allows you to set the parent menu, so you can interact with it from this menu
         """
 
         self.title = title
@@ -60,7 +19,7 @@ class Menus:
         self.menu_items = {}
         if menu_items is not None:
             self.initialize_menu(menu_items=menu_items)
-        self.parent = parent
+        self.parent: Menus = parent
         self.returned_values = None  # these are values returned by other menus, or functions to this menu.
         self.options = {}
         self.default_function = None
@@ -139,6 +98,11 @@ class Menus:
     def set_default_options(self):
         self.set_key_options()
         self.set_separator()
+
+    def return_values(self, values):
+        if self.parent is None:
+            raise TypeError(f'Parent not Set for {self}')
+        self.parent.returned_values = values
 
     def initialize_menu(self, menu_items):
         """
