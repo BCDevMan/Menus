@@ -4,7 +4,7 @@ from .menu_item import MenuItem
 
 
 class Menus:
-    def __init__(self, title=None, help_text=None, menu_items=None, return_on_valid_input=False):
+    def __init__(self, title=None, menu_items=None, help_text=None, return_on_valid_input=False, parent=None):
         """
         Class for construction of a basic CLI menu
         A menu with default options enabled will appear as:
@@ -60,6 +60,8 @@ class Menus:
         self.menu_items = {}
         if menu_items is not None:
             self.initialize_menu(menu_items=menu_items)
+        self.parent = parent
+        self.returned_values = None  # these are values returned by other menus, or functions to this menu.
         self.options = {}
         self.default_function = None
         self.return_on_valid_input = return_on_valid_input
